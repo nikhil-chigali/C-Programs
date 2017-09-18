@@ -27,8 +27,8 @@ void insertAtNthPosition(int x,int n) {
 		NEW=(node*)malloc(sizeof(node));
 		NEW->data=x;
 		int i;
-		temp=head->link;
-		for(i=2; i!=n-1&&temp->link!=head; i++) {
+		temp=head;
+		for(i=1; i!=n-1&&temp->link!=head; i++) {
 			temp=temp->link;
 		}
 
