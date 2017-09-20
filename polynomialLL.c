@@ -7,7 +7,9 @@ typedef struct node{
 	int exp;
 	struct node* link;
 }*polynomial;
-polynomial NEW,temp;
+polynomial NEW,temp,temp1,temp2,prod=null,track;
+
+
 polynomial create(polynomial poly){
 	int coeff,exp;
 	scanf("%d %d",&coeff,&exp);
@@ -28,6 +30,9 @@ polynomial create(polynomial poly){
 	}
 	return poly;
 }
+
+
+
 void display(polynomial poly){
 	for(temp=poly;temp!=null;temp=temp->link){
 		printf("(%d)x%d",temp->coeff,temp->exp);
@@ -37,13 +42,18 @@ void display(polynomial poly){
 	
 }
 
+
+
+
 void add( polynomial poly1, polynomial poly2){
 	polynomial sum=null;
-	while(poly1!=null || poly2!=null){
-		if(poly1->exp > poly2->exp || (poly2==null)){
+	temp1=poly1;
+	temp2=poly2;
+	while(temp1!=null || temp2!=null){
+		if(temp1->exp > temp2->exp || (temp2==null)){
 			NEW=(polynomial)malloc(sizeof(polynomial));
-			NEW->coeff=poly1->coeff;
-			NEW->exp=poly1->exp;
+			NEW->coeff=temp1->coeff;
+			NEW->exp=temp1->exp;
 			NEW->link=null;
 			if(sum==null){
 				sum=NEW;
@@ -53,12 +63,12 @@ void add( polynomial poly1, polynomial poly2){
 				temp->link=NEW;
 				temp=NEW;
 			}
-			poly1=poly1->link;
+			temp1=temp1->link;
 		}
-		else if(poly2->exp > poly1->exp || (poly1==null)){
+		else if(temp2->exp > temp1->exp || (temp1==null)){
 			NEW=(polynomial)malloc(sizeof(polynomial));
-			NEW->coeff=poly2->coeff;
-			NEW->exp=poly2->exp;
+			NEW->coeff=temp2->coeff;
+			NEW->exp=temp2->exp;
 			NEW->link=null;
 			if(sum==null){
 				sum=NEW;
@@ -68,12 +78,12 @@ void add( polynomial poly1, polynomial poly2){
 				temp->link=NEW;
 				temp=NEW;
 			}
-			poly2=poly2->link;
+			temp2=temp2->link;
 		}
 		else{
 			NEW=(polynomial)malloc(sizeof(polynomial));
-			NEW->coeff=poly1->coeff+poly2->coeff;
-			NEW->exp=poly2->exp;
+			NEW->coeff=temp1->coeff+temp2->coeff;
+			NEW->exp=temp2->exp;
 			NEW->link=null;
 			if(sum==null){
 				sum=NEW;
@@ -83,12 +93,92 @@ void add( polynomial poly1, polynomial poly2){
 				temp->link=NEW;
 				temp=NEW;
 			}
-			poly1=poly1->link;
-			poly2=poly2->link;
+			temp1=temp1->link;
+			temp2=temp2->link;
 		}
 	}
+	display(poly1);
+	printf(" + ");
+	display(poly2);
+	printf("\n");
 	display(sum);
 		
+}
+
+void traverse ( polynomial traverse  ){
+	track = prod;
+	if ( track==null )
+	{
+		prod = traverse;
+		return ;
+	}
+	else{
+		
+		while ( track->link != null ){
+			
+			if( track->exp == traverse->exp ){
+				
+				track->coeff += traverse->coeff;
+				free(traverse);
+				return ;
+				
+			}
+			
+			track = track->link;
+			
+		}
+		
+		if ( track->link == null && track->exp == traverse->exp ){
+				
+				track->coeff += traverse->coeff;
+				free(traverse);
+				return ;
+				
+			}
+		else {
+			
+			track->link = traverse;
+			return;
+			}
+	
+	
+}
+
+}
+void multiply( polynomial poly1 , polynomial poly2 ){
+//	polynomial prod=null;
+	temp1=poly1;
+	while( temp1 !=null ){
+		temp2=poly2;
+		while( temp2 !=null ){
+			
+			NEW = (polynomial)malloc (sizeof(polynomial));
+			NEW->coeff = temp1->coeff * temp2->coeff;
+			NEW->exp = temp1->exp + temp2->exp;
+			NEW->link = null;
+			traverse (NEW );
+			temp2 = temp2->link;
+		}
+		temp1=temp1->link;
+	}
+	display(prod);
+}
+
+
+void diff(polynomial poly){
+	temp1=poly;
+	while(temp1 != null){
+		if(temp1->exp == 0){
+			return ;
+		}
+		else{
+		printf("(%d)x%d",(temp1->coeff)*(temp1->exp) , (temp1->exp - 1));
+		if(temp1->link!=null)
+		printf("+");
+		
+		temp1 = temp1->link;
+	    }
+	}
 }
 
 int main(){
@@ -103,5 +193,15 @@ int main(){
 	display(poly2);
 	printf("\nsum of 1st n 2nd polynomials is\n");
 	add(poly1,poly2);
-    return 0;	
+    printf("\n\nproduct of 1st n 2nd polynomials is\n\n");
+	multiply(poly1,poly2);
+	printf("\n");
+	
+	printf("\ndifferentiation of the 1st polynomial is;\n\n");
+	diff(poly1);
+	printf("\ndifferentiation of the 2nd polynomial is;\n\n");
+	diff(poly2);
+	
+	
+	return 0;	
 }
