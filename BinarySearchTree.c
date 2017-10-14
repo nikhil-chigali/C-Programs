@@ -99,10 +99,7 @@ void insert(int x,node temp,node neww){
 }
 
 node delete( int x , node temp){
-	if(!temp){
-		return null;
-		}
-	else if(x<temp->data){
+	if(x<temp->data){
 		temp->lc = delete(x,temp->lc);
 	}
 	else if(x>temp->data){
@@ -213,7 +210,7 @@ int main(){
 				printf("\n%d deleted from the tree\n",x);
 			}
 			else
-			printf("\n%d is not present in the tree\n");
+			printf("\n%d is not present in the tree\n",x);
 			break;
 		case 3:
 			printf("\nEnter an element:\t");
@@ -253,7 +250,7 @@ int main(){
 		case 10:
 			goto A;
 			break;
-			
+		default:printf("\nInvalid choice\n");
 	}
 }
 	A:return 0;
