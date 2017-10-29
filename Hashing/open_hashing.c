@@ -52,10 +52,7 @@ void search(int value){
 }
 
 int main(){
-	int i;
-	for(i = 0;i<h_size;i++){
-		h_table[i] = null;
-	}
+
 	
 	int ch;
 	int temp;
