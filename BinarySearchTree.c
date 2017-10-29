@@ -26,7 +26,7 @@ void inorder_traversal(node temp);
 void postorder_traversal(node temp);
 void peorder_traversal(node temp);
 void make_empty(node temp);
-
+int height(node temp);
 /*		function definations	*/
 
 node find_max(node temp){
@@ -187,12 +187,26 @@ void make_empty(node temp){
 	}
 }
 
+int height(node temp){
+	int h1 = 0,h2 = 0;
+	if(temp->lc){
+		h1 = height(temp->lc) + 1;
+	}
+	if(temp->rc){
+		h1 = height(temp->rc) + 1;
+	}
+	if(h1>=h2)
+	return h1;
+	else
+	return h2;
+}
 
 int main(){
 	
-	int x,ch;
+	int x,ch,m;
 	while(1){
-	printf("\n1.insert\n2.delete\n3.search an element\n4.find minimum\n5.find maximum\n6.make empty\n7.inorder traversal\n8.postorder traversal\n9.preorder traversal\n10.terminate\n\n");
+	printf("\n1.insert\n2.delete\n3.search an element\n4.find minimum\n5.find maximum\n");
+	printf("6.make empty\n7.inorder traversal\n8.postorder traversal\n9.preorder traversal\n10.find height of a node\n11.terminate\n\n");
 	scanf("%d",&ch);
 	switch(ch){
 		case 1:
@@ -248,6 +262,19 @@ int main(){
 			preorder_traversal(root);
 			break;
 		case 10:
+			printf("\nEnter element\n");
+			scanf("%d",&x);
+			temp = search(x,root);
+			if(temp){
+				m = height(temp);
+				printf("\nHeight of %d is %d\n",x,m);
+			}
+			else{
+				printf("\nElement doesn't exist in the tree\n");
+				return -1;
+			}
+			break;
+		case 11:
 			goto A;
 			break;
 		default:printf("\nInvalid choice\n");
