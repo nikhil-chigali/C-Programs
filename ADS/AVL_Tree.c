@@ -11,7 +11,7 @@ typedef struct tree{
 
 node root = NULL , New , temp;
 
-
+#finding the height of the tree
 int height(node x){
 	if(x){
 		int hl = height(x->left);
@@ -85,7 +85,7 @@ node find_min(node temp){
 	}
 	}
 }
-
+#deleting node from the tree
 node delete(node root, int x){
 	if(!root){
 		printf("Key not found!");
