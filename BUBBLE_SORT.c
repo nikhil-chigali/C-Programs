@@ -1,4 +1,4 @@
-// Bubble sort
+// Bubble sort Algorithm
 
 #include<stdio.h>
 #include<stdlib.h>
